@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'routine_weekday_v1';
+const STORAGE_KEY = 'routine_' + (window.location.pathname.split('/')[1] || 'default');
 const MAX_WEEKS = 4;
 let currentEditPeriod = getCurrentPeriod();
 
