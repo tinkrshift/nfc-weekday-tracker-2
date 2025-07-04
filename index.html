@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weekday Routine Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1em;
+      text-align: center;
+      background: var(--bg, #fff);
+      color: var(--color, #000);
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 1em 0;
+      font-size: 1.5em;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-right: 1em;
+    }
+    button, input, select {
+      margin: 10px;
+      font-size: 1em;
+      padding: 0.5em 1em;
+    }
+    #completion-rate {
+      margin-top: 20px;
+      font-size: 1.1em;
+    }
+    #settings-icon {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+    #settings-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 10px;
+      background: var(--bg, #fff);
+      border: 1px solid #ccc;
+      padding: 1em;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .dark {
+      --bg: #121212;
+      --color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <div id="settings-icon" onclick="toggleSettings()">⚙️</div>
+  <div id="settings-menu">
+    <button onclick="toggleEditMode()">Edit Tasks</button><br>
+    <button onclick="copyLink()">Copy Link</button><br>
+    <button onclick="exportData()">Export Data</button><br>
+    <input type="file" id="import-file" accept=".json" onchange="importData(event)" /><br>
+    <button onclick="showReadme()">How to Use</button><br>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  </div>
+
+  <h2 id="task-header">Routine</h2>
+  <ul id="task-list"></ul>
+  <p id="completion-rate"></p>
+
+  <div id="edit-section" style="display:none;">
+    <select id="edit-period" onchange="renderEditList()">
+      <option value="Sunday">Sunday</option>
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+      <option value="Saturday">Saturday</option>
+    </select><br>
+    <input type="text" id="list-title" placeholder="List Title..." oninput="updateListTitle()"><br>
+    <input type="text" id="new-task" placeholder="New task...">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="edit-list"></ul>
+  </div>
+
+  <div id="readme-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000bb; color:white; padding:2em; box-sizing:border-box; z-index:1000; overflow:auto;">
+    <div style="background:#222; padding:1em; border-radius:8px; max-width:600px; margin: auto;">
+      <h2>How to Use</h2>
+      <p>This site automatically loads your task list for the current day of the week (e.g. Monday, Friday).</p>
+      <p>Use it to build habits and routines that match your weekly flow — one link is all you need.</p>
+      <p>All info is saved locally on this device only. If you clear your cache or switch devices, your tasks and history will be lost.</p>
+      <p><strong>If you plan to switch devices, export your data using the gear menu and re-upload the JSON to restore your list and tracker.</strong></p>
+      <button onclick="hideReadme()">Close</button>
+    </div>
+  </div>
+
+  <p style="font-size:0.8em; text-align:center; margin-top:2em;">
+    Powered by <a href="https://www.youtube.com/@tinkrshift" target="_blank">TinkrShift</a>
+  </p>
+
+  <script src="app.js"></script>
+</body>
+</html>
